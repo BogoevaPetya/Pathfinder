@@ -8,6 +8,9 @@ public class UserLoginDTO {
     @NotBlank
     private String password;
 
+    public UserLoginDTO() {
+    }
+
     public String getUsername() {
         return username;
     }
@@ -23,4 +26,6 @@ public class UserLoginDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

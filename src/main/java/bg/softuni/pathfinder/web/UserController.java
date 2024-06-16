@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/users/register")
     public String viewRegister(Model model){
-        model.addAttribute("registerData", new UserRegisterDTO());
+        model.addAttribute("userRegisterDTO", new UserRegisterDTO());
         //или горното може да се замени с @ModelAttribute, закоментирано по-долу
         model.addAttribute("levels", Level.values());
         return "register";
@@ -34,25 +34,39 @@ public class UserController {
 //    }
 
     @PostMapping("/users/register")
-    public String register(@Valid UserRegisterDTO data, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String register(@Valid UserRegisterDTO userRegisterDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.UserRegisterDTO", bindingResult);
-            return "redirect:/users/register";
+            return "register";
         }
 
-        this.userService.register(data);
+        this.userService.register(userRegisterDTO);
         return "redirect:/users/login ";
     }
 
     @GetMapping("/users/login")
-    public String viewLogin(){
+    public String viewLogin(Model model){
+        model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "login";
     }
 
     @PostMapping("/users/login")
     public String login(UserLoginDTO userLoginDTO){
-        return "login";
+        userService.login(userLoginDTO);
+        return "redirect:/";
+    }
+
+    @PostMapping("/users/logout")
+    public String logout(){
+        userService.logout();
+        return "redirect:/";
+    }
+
+    @GetMapping("users/profile")
+    public String profile(Model model){
+        model.addAttribute("userProfile",  userService.getProfileData());
+        return "profile";
     }
 }
