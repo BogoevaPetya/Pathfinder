@@ -52,16 +52,21 @@ public class RouteController {
 
     @PostMapping("/add-route")
     public String doAddRoute(
-            @Valid AddRouteDTO data,
+            @Valid AddRouteDTO addRouteDTO,
             @RequestParam("gpxCoordinates") MultipartFile file,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) throws IOException {
-        // if (!valid) return errors
 
-        routeService.add(data, file);
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("addRouteDTO", addRouteDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addRouteDTO", bindingResult);
+            return "redirect:/add-route";
+        }
 
-        return "redirect:/add-route";
+        routeService.add(addRouteDTO, file);
+
+        return "redirect:/routes";
     }
 
     @GetMapping("/bicycle")

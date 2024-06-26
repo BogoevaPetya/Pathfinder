@@ -75,8 +75,8 @@ public class RouteService {
         return dto;
     }
 
-    public boolean add(AddRouteDTO data, MultipartFile gpxFile) throws IOException {
-        Route toInsert = modelMapper.map(data, Route.class);
+    public boolean add(AddRouteDTO addRouteDTO, MultipartFile gpxFile) throws IOException {
+        Route toInsert = modelMapper.map(addRouteDTO, Route.class);
 
         Path destinationFile = Paths
                 .get("src", "main","resources", "uploads", "file.gpx")
