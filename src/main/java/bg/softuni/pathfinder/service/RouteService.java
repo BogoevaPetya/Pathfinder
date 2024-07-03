@@ -6,7 +6,6 @@ import bg.softuni.pathfinder.model.dtos.AddRouteDTO;
 import bg.softuni.pathfinder.model.dtos.RouteShortInfoDTO;
 import bg.softuni.pathfinder.repositories.RouteRepository;
 import bg.softuni.pathfinder.repositories.UserRepository;
-import bg.softuni.pathfinder.user.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,14 +27,12 @@ import java.util.stream.Collectors;
 public class RouteService {
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
-    private final CurrentUser currentUser;
     private Random random;
     private ModelMapper modelMapper;
 
-    public RouteService(RouteRepository routeRepository, UserRepository userRepository, CurrentUser currentUser, ModelMapper modelMapper) {
+    public RouteService(RouteRepository routeRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.routeRepository = routeRepository;
         this.userRepository = userRepository;
-        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.random = new Random();
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,6 +19,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @ModelAttribute
+    public UserLoginDTO userLoginDTO(){
+        return new UserLoginDTO();
     }
 
     @GetMapping("/users/register")
@@ -50,18 +56,6 @@ public class UserController {
     public String viewLogin(Model model){
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "login";
-    }
-
-    @PostMapping("/users/login")
-    public String login(UserLoginDTO userLoginDTO){
-        userService.login(userLoginDTO);
-        return "redirect:/";
-    }
-
-    @PostMapping("/users/logout")
-    public String logout(){
-        userService.logout();
-        return "redirect:/";
     }
 
     @GetMapping("users/profile")
