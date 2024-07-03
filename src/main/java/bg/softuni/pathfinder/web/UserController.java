@@ -26,6 +26,11 @@ public class UserController {
         return new UserLoginDTO();
     }
 
+    @ModelAttribute("registerData")
+    public UserRegisterDTO initUserRegisterDTO(){
+        return new UserRegisterDTO();
+    }
+
     @GetMapping("/users/register")
     public String viewRegister(Model model){
         model.addAttribute("userRegisterDTO", new UserRegisterDTO());
@@ -33,11 +38,6 @@ public class UserController {
         model.addAttribute("levels", Level.values());
         return "register";
     }
-
-//    @ModelAttribute("registerData")
-//    public UserRegisterDTO initUserRegisterDTO(){
-//        return new UserRegisterDTO();
-//    }
 
     @PostMapping("/users/register")
     public String register(@Valid UserRegisterDTO userRegisterDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
@@ -54,6 +54,13 @@ public class UserController {
 
     @GetMapping("/users/login")
     public String viewLogin(Model model){
+        model.addAttribute("userLoginDTO", new UserLoginDTO());
+        return "login";
+    }
+
+    @GetMapping("/users/login-error")
+    public String viewLoginError(Model model){
+        model.addAttribute("showErrorMessage", true);
         model.addAttribute("userLoginDTO", new UserLoginDTO());
         return "login";
     }

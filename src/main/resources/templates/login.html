@@ -28,6 +28,7 @@
                     th:method="post"
                     th:object="${userLoginDTO}">
                 <div>
+                    <div class="bg-danger" th:if="${showErrorMessage}" th:text="'Invalid username or password'">cccc</div>
                     <div class="col-auto">
                         <label for="inputUsername" class="col-form-label ">Username</label>
                     </div>

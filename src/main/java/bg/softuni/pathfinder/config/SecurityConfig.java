@@ -24,8 +24,8 @@ public class SecurityConfig {
                             formLogin.loginPage("/users/login");
                             formLogin.usernameParameter("username");
                             formLogin.passwordParameter("password");
-                            formLogin.defaultSuccessUrl("/");
-                            formLogin.failureForwardUrl("/users/login");
+                            formLogin.defaultSuccessUrl("/", true);
+                            formLogin.failureUrl("/users/login-error");
                         })
                 .logout(
                         logout -> {
