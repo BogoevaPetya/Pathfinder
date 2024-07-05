@@ -2,12 +2,15 @@ package bg.softuni.pathfinder.service.session;
 
 import bg.softuni.pathfinder.model.User;
 import bg.softuni.pathfinder.repositories.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -29,7 +32,13 @@ public class AppUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(List.of())
+                .authorities(mapToGrantedAuthorities(user))
                 .build();
+    }
+
+    private List<GrantedAuthority> mapToGrantedAuthorities(User user){
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
+                .collect(Collectors.toList());
     }
 }
